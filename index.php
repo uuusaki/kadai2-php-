@@ -2,12 +2,10 @@
      $midasi = " " ;//見出し
      $honbun = " " ;//本文
 
-     $FILE = 'article.txt' ; //保存するファイル名
-     $id = uniqid() ; //記事一つ一つに被らない文字列のランダムなIDを自動生成
-     $DATA = [] ; //一回分の投稿の情報を入れる配列
-     $BOARD = [] ;//すべての投稿の情報を入れる配列
+     
 
-
+     
+     
 
      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       //postの内容を受け取る
@@ -19,12 +17,6 @@
          //変数にpostの内容を代入
 
          //この後に保存の処理
-
-         $DATA = [$id, $midasi, $honbun];
-         $BOARD[] = $DATA
-
-         //全体配列をファイルに保存
-         file_put_contents($FILE, json_encode($BOARD));
 
         }
      }
@@ -71,22 +63,7 @@
       </p>
    </div>
 
-   <hr>
-   <div class="kakocontents">
-     <?php foaeach ( (array) $BOARD as $ARTICLE) : ?>
-       <!--配列＄BOARDを＄ARTICLEとして繰り返す-->
-       <div class="content">
-         <p>
-         <?php echo $ARTICLE[1]; ?>
-         <!--配列ARTICLEの中の$midasiを表示-->
-         </P>
-         <p>
-         <?php echo $ARTICLE[2]; ?>
-         <!--配列ARTICLEのなかの$honbunを表示-->
-         </p>
-       </div>
-     <?php endforeach; ?>
-   </div> 
+ 
   
   </body>
 </html>
