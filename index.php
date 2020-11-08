@@ -1,10 +1,18 @@
 <?php
-     $midasi = " " ;//見出し
-     $honbun = " " ;//本文
+     $title = " " ;//見出し
+     $text = " " ;//本文
 
-     
+     $FILE = 'article.txt'; //保存するファイル名
+     $id = uniqid() ; //記事ごとに被りがない文字列のIDを作成
+     $DATA = []; //一回分の情報を入れる配列
+     $BOARD = []; //すべての投稿の情報を入れる配列
 
-     
+     if (file_exists($FILE)){
+       //$FILE(article.txt)が存在しているとき以下を実行
+
+       $BOARD = json_decode(file_get_contents($FILE));
+       //$FILEからコンテンツを取り出し、Json形式を戻す
+     }
      
 
      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,11 +20,20 @@
         if (!empty($_POST['atitle']) && !empty($_POST['article'])){
          //post"atitle"が空でない　かつ　post"article"が空でない　とき
 
-         $midasi = $_POST['atitle'];
-         $honbun = $_POST['article'];
+         $title = $_POST['atitle'];
+         $text = $_POST['article'];
          //変数にpostの内容を代入
 
          //この後に保存の処理
+         //新規データ
+         $DATA = [$id, $title, $text];
+         //$DATAにid、title,textを入れる
+         $BOARD[] = $DATA;
+         //＄BOARDという配列に＄DATAを入れる
+
+         //全体配列をファイルに保存する
+         file_put_contents($FILE, json_encode($BOARD));
+         //article.txtのファイルに＄BOARDの内容をJson形式で上書き
 
         }
      }
@@ -56,13 +73,30 @@
    <hr>
    <div class="contents">
       <h3>
-         <?php echo $midasi ?>
+         <?php echo $title ?>
       </h3>
       <p>
-         <?php echo $honbun ?>
+         <?php echo $text ?>
       </p>
    </div>
 
+   <hr>
+   <div>
+     <?php foreach ((array)$BOARD as $ARTICLE) : ?>
+       <!--配列＄BOARDの内容を変数＄ARTICLEとして繰り返す-->
+       　<div>
+          <p>
+            <?php echo $ARTICLE[1]; ?>
+            <!--$ARTICLEの[1]（＄title）を表示-->
+          </P>
+          <p>
+            <?php echo $ARTICLE[2]; ?>
+            <!--＄ARTICLE[2]($text)を表示-->
+          </p>
+         </div>
+     <?php endforeach; ?>
+   </div>
+　　　
  
   
   </body>
