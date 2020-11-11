@@ -86,12 +86,12 @@
        <textarea name="article" rows="10" cols="50"></textarea>
      </div><br>
      <div class="submit">
-       <input type="submit" value="投稿する" onclick="alert('ピッカ！！')>
+       <input type="submit" value="投稿する" >
      </div>
    </form>
  
 
-   
+   <hr>
   
    
    <hr>
@@ -102,15 +102,18 @@
       <p>
          <?php echo $text ?>
       </p>
+      <p style= "text-align : right ;"><?php echo strlen ("$text") ?>字</p>
+      　<!--文字数カウント-->
    </div>
 
    <hr>
    <div>
+     <?php $BOARD = array_reverse($BOARD); ?>
      <?php foreach ((array)$BOARD as $ARTICLE) : ?>
        <!--配列＄BOARDの内容を変数＄ARTICLEとして繰り返す-->
        　<div>
-          <p>
-            <?php echo $ARTICLE[1]; ?>
+          <p><b>
+            <?php echo $ARTICLE[1]; ?></b>
             <!--$ARTICLEの[1]（＄title）を表示-->
           </P>
           <p>
@@ -118,8 +121,12 @@
             <!--＄ARTICLE[2]($text)を表示-->
           </p>
          </div>
+        <a href="action.php">詳細・コメントをみる</a><br>
      <?php endforeach; ?>
    </div>
+
+
+  
 　　　
  
   
