@@ -7,6 +7,8 @@
      $DATA = []; //一回分の情報を入れる配列
      $BOARD = []; //すべての投稿の情報を入れる配列
 
+     $error = '';//エラーメッセージ
+
      if (file_exists($FILE)){
        //$FILE(article.txt)が存在しているとき以下を実行
 
@@ -35,6 +37,23 @@
          file_put_contents($FILE, json_encode($BOARD));
          //article.txtのファイルに＄BOARDの内容をJson形式で上書き
 
+        }elseif(empty($_POST['atitle']) && empty($_POST['article'])){
+          //post"atitle"が空の時 かつ　post"article"が空の時
+
+          $error = 'タイトルと記事を入力してください';
+          //'error'に代入
+
+        }elseif(!empty($_POST['atitle']) && empty($_POST['article'])){
+          //post"atitle"が空でない、"article"が空
+        
+
+          $error = '記事を入力してください';
+          //'error'に代入
+
+        }elseif(empty($_POST['atitle']) && !empty($_POST['article'])){
+          //post"atitle"が空、"article"が空でないのとき
+
+          $error = 'タイトルを入力してください';
         }
      }
 ?>
@@ -44,12 +63,17 @@
  <head>
     <meta charset="utf-8" />
     <title>課題2 Lalavel News</title>
+    <link rel="stylesheet" href="styles.css">
  </head>
  <body>
 
-   <h2>Lalavel News</h2>
+   <h2 class="laravelnews">Laravel News</h2>
    <h3>さあ　最新ニュースをシェアしましょう</h3>
    <br>
+
+   <p class="error"> 
+    <?php echo $error ?>
+   </p>
 
 
    <form method="post" >  
@@ -62,7 +86,7 @@
        <textarea name="article" rows="10" cols="50"></textarea>
      </div><br>
      <div class="submit">
-       <input type="submit" value="投稿する">
+       <input type="submit" value="投稿する" onclick="alert('ピッカ！！')>
      </div>
    </form>
  
