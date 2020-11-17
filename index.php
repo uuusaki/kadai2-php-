@@ -65,6 +65,7 @@
     <title>課題2 Lalavel News</title>
     <link rel="stylesheet" href="styles.css">
  </head>
+ 
  <body>
 
    <h2 class="laravelnews">Laravel News</h2>
@@ -79,11 +80,11 @@
    <form method="post" >  
      <div class="atytle">
        <p>タイトル：</p>
-       <input type="text" name="atitle"> 
+       <input type="text" name="atitle" style="width:100%"> 
      </div><br>
      <div class="article">
        <p>記事：</p>
-       <textarea name="article" rows="10" cols="50"></textarea>
+       <textarea name="article" rows="10" style="width:100%"></textarea>
      </div><br>
      <div class="submit">
        <input type="submit" value="投稿する" >
