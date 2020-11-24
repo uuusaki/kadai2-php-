@@ -30,14 +30,35 @@ if ($success) {
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!empty($_POST['title']) && !empty($_POST['article']) ) {
+    //タイトルがからでない　かつ　アーティクルが空でない時
+
     //名前の追加用のQueryを書く。
     $title = $_POST['title'];
     $article = $_POST['article'];
 
-    $insert_query = "INSERT INTO `date`(`id`, `title`, `article`) VALUES (['$id'],['$title'],['$article'])";
+    $DATA = [$id, $title, $text];
+
+    $insert_query = "INSERT INTO `date`(`id`, `title`, `article`) VALUES ('$id','$title','$article')";
     mysqli_query($link, $insert_query);
     header('Location: ' . $_SERVER['SCRIPT_NAME']);
     exit;
+
+  }elseif(empty($_POST['title']) && empty($_POST['article'])){
+    //post"title"が空の時 かつ　post"article"が空の時
+
+    $error = 'タイトルと記事を入力してください';
+    //'error'に代入
+
+  }elseif(!empty($_POST['title']) && empty($_POST['article'])){
+    //post"title"が空でない、"article"が空
+  
+    $error = '記事を入力してください';
+    //'error'に代入
+
+  }elseif(empty($_POST['title']) && !empty($_POST['article'])){
+    //post"title"が空、"article"が空でないのとき
+
+    $error = 'タイトルを入力してください';
   } 
 }
 ?>
@@ -80,16 +101,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    
    
    <hr>
+   <!--
    <div class="contents">
+     <p>最新の投稿</P>
       <h3>
-         <?php echo $title ?>
+         <?php echo $DATA[1]; ?>
       </h3>
       <p>
-         <?php echo $text ?>
+         <?php echo $DATA[2]; ?>
       </p>
       <p style= "text-align : right ;"><?php echo strlen ("$text") ?>字</p>
-      　<!--文字数カウント-->
+      　文字数カウント
    </div>
+     -->
 
    <hr>
    <div>
