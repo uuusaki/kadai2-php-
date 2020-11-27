@@ -96,7 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      </div>
    </form>
  
-
+    <p>
+     <?php 
+     date_default_timezone_set('Asia/Tokyo');
+     echo date("Y/m/d h:i:s") ?>
+    </p>
+    <!--特に意味のない時刻表示（やってみたかっただけ）-->
    <hr>
    
    
@@ -130,7 +135,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!--＄ARTICLE[2]($text)を表示-->
           </p>
          </div>
-        <a href="action.php">詳細・コメントをみる</a><br>
+         <form action = "commentmysql.php" method = "get">
+          <!--このformの内容をcommentmysql.phpに送る、方法はget-->
+          <textarea name ="id" hidden><?php echo $ARTICLE[0] ?></textarea>
+          <!--この記事IDをテキストエリア内に表示、このテキストエリアは非表示-->
+          <input type = "submit" value ="詳細ページへ">
+          <!--サブミットボタンでformの内容を送る-->
+         </form>
+        <br>
      <?php endforeach; ?>
    </div>
 
