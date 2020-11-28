@@ -43,6 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ' . $_SERVER['SCRIPT_NAME']);
     exit;
 
+  }else if (isset($_POST['del'])) {
+    //削除ボタンを押したときの処理を書く。
+    $delete_query = "DELETE FROM `date` WHERE `id` = '{$_POST['del']}'";
+    mysqli_query($link, $delete_query);
+    header('Location: ' . $_SERVER['SCRIPT_NAME']);
+    exit;
   }elseif(empty($_POST['title']) && empty($_POST['article'])){
     //post"title"が空の時 かつ　post"article"が空の時
 
@@ -134,13 +140,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php echo $ARTICLE[2]; ?>
             <!--＄ARTICLE[2]($text)を表示-->
           </p>
-         </div>
+        </div>
+
          <form action = "commentmysql.php" method = "get">
           <!--このformの内容をcommentmysql.phpに送る、方法はget-->
           <textarea name ="id" hidden><?php echo $ARTICLE[0] ?></textarea>
           <!--この記事IDをテキストエリア内に表示、このテキストエリアは非表示-->
           <input type = "submit" value ="詳細ページへ">
           <!--サブミットボタンでformの内容を送る-->
+         </form>
+         <form method="post">
+          <input type="hidden" name="del" value="<?php echo $ARTICLE[0] ?>">
+          <input type="submit" value="削除" class="deleteComment">
          </form>
         <br>
      <?php endforeach; ?>
