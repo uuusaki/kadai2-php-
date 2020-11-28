@@ -18,6 +18,7 @@
   $id = "";
   $title = "";
   $article = "";
+  $error = "";
   $thistitle = "";
   $thisarticle = "";
   $thiscom = "";
@@ -40,7 +41,7 @@
  
   //コメントをMYSQLに送る
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!empty($_POST['comment'])) {
+    if (!empty($_POST['comment']) ) {
       //コメントが空でない時
   
       //追加用のQueryを書く。
@@ -51,7 +52,8 @@
       header('Location: ' . $_SERVER['REQUEST_URI']);
 
       exit;
-    }else if (isset($_POST['del'])) {
+    }
+    else if (isset($_POST['del'])) {
     //削除ボタンを押したときの処理を書く。
     $delete_query = "DELETE FROM `comment` WHERE `com_id` = '{$_POST['del']}'";
     mysqli_query($link, $delete_query);
@@ -62,9 +64,9 @@
   //ここまでできてる
 
   //コメント用のデータを取得
-  $query = "SELECT * FROM `comment` WHERE id = '$getid'" ;
+  $com_query = "SELECT * FROM `comment` WHERE id = '$getid'" ;
   if ($success) {
-    $result = mysqli_query($link, $query);
+    $result = mysqli_query($link, $com_query);
     while ($row = mysqli_fetch_array($result)) {
       $COM_BOARD[] = [$row['com_id'], $row['id'], $row['comment']];
    }
@@ -80,7 +82,7 @@
  <head>
     <meta charset="utf-8" />
     <title>課題2 Lalavel News</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylesmysql.css">
  </head>
  
  <body>
@@ -89,7 +91,7 @@
    <h3>ニュースの詳細</h3>
    <br>
 
-   <p>
+   <p hidden>
      <?php echo $getid; 
       foreach ((array)$BOARD as $ARTICLE){
         if("$getid" == "$ARTICLE[0]"){
@@ -122,14 +124,6 @@
       　　 <input type="submit" value="コメントする" >
 
      　　</div>
-      </form>
-
-      <form action = "commentmysql.php" method = "get">
-          <!--このformの内容をcommentmysql.phpに送る、方法はget-->
-          <textarea name ="id" hidden><?php echo $getid ?></textarea>
-          <!--この記事IDをテキストエリア内に表示、このテキストエリアは非表示-->
-          <input type = "submit" value ="詳細ページへ">
-          <!--サブミットボタンでformの内容を送る-->
       </form>
     </div>
     <p class="error"> 

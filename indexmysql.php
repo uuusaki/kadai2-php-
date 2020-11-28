@@ -19,6 +19,7 @@
   $id = uniqid() ; //記事ごとに被りがない文字列のIDを作成
   $DATA = []; //一回分の情報を入れる配列
   $BOARD = []; //すべての投稿の情報を入れる配列
+  $error = "";
   
 // MySQLからデータを取得
 $query = "SELECT * FROM `date`";
@@ -74,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  <head>
     <meta charset="utf-8" />
     <title>課題2 Lalavel News</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylesmysql.css">
  </head>
  
  <body>
